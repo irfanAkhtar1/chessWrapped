@@ -7,7 +7,7 @@ const usernameEl = document.getElementById('username');
 const resetBtn = document.getElementById('reset-btn');
 const cards = document.querySelectorAll('.card');
 
-// ─── CANVAS BG (animated chess grid) ────────────────────────────────────────
+// ─── CANVAS BG (animated chess grid) 
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
 let offset = 0;
