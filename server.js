@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-app.use(express.static('public'));
+app.use(express.static('./'));
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 const getYear = g => new Date((g?.end_time || 0) * 1000).getFullYear();
