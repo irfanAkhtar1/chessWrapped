@@ -3,13 +3,12 @@ const path = require('path');
 
 const app = express();
 
-// Serve frontend
 app.use(express.static(path.join(__dirname, '../public')));
 
 // ─── HELPERS ─────────────────────────────────────────
 const getYear = g => new Date((g?.end_time || 0) * 1000).getFullYear();
 
-// ─── FETCH 2025 GAMES ────────────────────────────────
+// ─── FETCH 2025 GAMES ─────────────────────────────────
 async function fetch2025Games(username) {
   const archRes = await fetch(`https://api.chess.com/pub/player/${username}/games/archives`);
   if (!archRes.ok) throw new Error('Player not found');
@@ -29,7 +28,7 @@ async function fetch2025Games(username) {
   return games;
 }
 
-// ─── PROFILE ─────────────────────────────────────────
+// ─── PROFILE ──────────────────────────────────────────
 async function fetchProfile(username) {
   try {
     const [profileRes, statsRes] = await Promise.all([
@@ -56,7 +55,7 @@ async function fetchProfile(username) {
   }
 }
 
-// ─── API ─────────────────────────────────────────────
+// ─── API ──────────────────────────────────────────────
 app.get('/api/stats/:username', async (req, res) => {
   const { username } = req.params;
 
@@ -116,11 +115,8 @@ app.get('/api/stats/:username', async (req, res) => {
   }
 });
 
-// ✅ THIS is what Vercel needs
 module.exports = app;
 
-// ✅ Local testing only
 if (process.env.NODE_ENV !== 'production') {
-  const PORT = 3000;
-  app.listen(PORT, () => console.log(`Local → http://localhost:${PORT}`));
+  app.listen(3000, () => console.log('Local → http://localhost:3000'));
 }

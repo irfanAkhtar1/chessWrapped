@@ -1,4 +1,4 @@
-// ─── ELEMENTS ───────────────────────────────────────────────────────────────
+// ─── ELEMENTS ────────────────────────────────────────────────────────────────
 const landing = document.getElementById('landing');
 const scene = document.getElementById('scene');
 const errEl = document.getElementById('err');
@@ -7,7 +7,7 @@ const usernameEl = document.getElementById('username');
 const resetBtn = document.getElementById('reset-btn');
 const cards = document.querySelectorAll('.card');
 
-// ─── CANVAS BG (animated chess grid) 
+// ─── CANVAS BG ───────────────────────────────────────────────────────────────
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
 let offset = 0;
@@ -47,7 +47,7 @@ resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 drawBg();
 
-// ─── FETCH + SHOW ────────────────────────────────────────────────────────────
+// ─── EVENTS ──────────────────────────────────────────────────────────────────
 goBtn.addEventListener('click', analyze);
 usernameEl.addEventListener('keypress', e => e.key === 'Enter' && analyze());
 resetBtn.addEventListener('click', () => {
@@ -56,6 +56,7 @@ resetBtn.addEventListener('click', () => {
   usernameEl.value = '';
 });
 
+// ─── FETCH ───────────────────────────────────────────────────────────────────
 async function analyze() {
   const user = usernameEl.value.trim();
   if (!user) return setErr('Enter a username');
@@ -76,7 +77,7 @@ async function analyze() {
   }
 }
 
-// ─── RENDER DATA ─────────────────────────────────────────────────────────────
+// ─── RENDER ──────────────────────────────────────────────────────────────────
 function render(d) {
   const b = d.timeControlBreakdown || {};
 
@@ -108,7 +109,7 @@ function render(d) {
     : b.bullet >= b.blitz ? 'Bullet' : 'Blitz';
   document.getElementById('fav-tc').textContent = fav;
 
-  // Ratings grid
+  // Ratings
   const ratings = d.ratings || {};
   document.getElementById('ratings').innerHTML =
     Object.entries(ratings).map(([k, v]) =>
@@ -132,7 +133,7 @@ function render(d) {
   initCards(d);
 }
 
-// ─── 3D CARD SYSTEM ──────────────────────────────────────────────────────────
+// ─── CARD SYSTEM ─────────────────────────────────────────────────────────────
 let currentCard = 0;
 
 function initCards(d) {
@@ -140,16 +141,13 @@ function initCards(d) {
   buildDots();
   scrollToCard(0);
 
-  // Animate numbers on scroll
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
       const el = e.target;
-
       if (el.classList.contains('c-games')) countUp('total-games', d.totalGames);
       if (el.classList.contains('c-wins')) countUpFloat('win-rate', d.winRate);
       if (el.classList.contains('c-streak')) countUp('best-streak', d.bestStreak);
-
       el.classList.add('card-in');
       updateDots(Array.from(cards).indexOf(el));
     });
@@ -157,7 +155,7 @@ function initCards(d) {
 
   cards.forEach(c => io.observe(c));
 
-  // 3D tilt on mouse move
+  // 3D tilt
   cards.forEach(card => {
     const inner = card.querySelector('.card-3d');
     card.addEventListener('mousemove', e => {
@@ -209,13 +207,12 @@ function updateDots(idx) {
     d.classList.toggle('active', i === idx));
 }
 
-// ─── COUNT UP ANIMATIONS ─────────────────────────────────────────────────────
+// ─── COUNT UP ────────────────────────────────────────────────────────────────
 function countUp(id, end) {
   const el = document.getElementById(id);
   if (!el || !end) return;
   const t0 = Date.now();
   const dur = 1500;
-
   (function tick() {
     const p = Math.min((Date.now() - t0) / dur, 1);
     const ease = 1 - Math.pow(1 - p, 4);
@@ -229,7 +226,6 @@ function countUpFloat(id, end) {
   if (!el || !end) return;
   const t0 = Date.now();
   const dur = 1500;
-
   (function tick() {
     const p = Math.min((Date.now() - t0) / dur, 1);
     const ease = 1 - Math.pow(1 - p, 4);
