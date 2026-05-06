@@ -1,0 +1,552 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --green: #00ff88;
+  --dark: #080c10;
+  --card-h: 100vh;
+  --font-head: 'Bebas Neue', sans-serif;
+  --font-body: 'DM Mono', monospace;
+}
+
+body {
+  background: var(--dark);
+  color: #fff;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+/* ─── LANDING ─── */
+#landing {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#bg-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.landing-inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2rem;
+}
+
+.logo-block {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.logo-chess {
+  font-size: 5rem;
+  color: var(--green);
+  filter: drop-shadow(0 0 20px rgba(0, 255, 136, .5));
+  animation: floaty 3s ease-in-out infinite;
+}
+
+h1 {
+  font-family: var(--font-head);
+  font-size: 6rem;
+  line-height: .9;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+h1 em {
+  font-style: normal;
+  color: var(--green);
+  -webkit-text-stroke: 0px;
+}
+
+h1 .yr {
+  font-size: 2.5rem;
+  color: #555;
+}
+
+.tagline {
+  font-size: .9rem;
+  color: #666;
+  letter-spacing: .15em;
+  margin-bottom: 2.5rem;
+  text-transform: uppercase;
+}
+
+.input-row {
+  display: flex;
+  gap: .75rem;
+  max-width: 480px;
+  margin: 0 auto 1rem;
+}
+
+input {
+  flex: 1;
+  padding: .9rem 1.2rem;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid #333;
+  border-radius: 4px;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: border-color .2s;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--green);
+}
+
+input::placeholder {
+  color: #555;
+}
+
+button {
+  padding: .9rem 1.6rem;
+  background: var(--green);
+  color: #080c10;
+  border: none;
+  border-radius: 4px;
+  font-family: var(--font-head);
+  font-size: 1.3rem;
+  letter-spacing: .08em;
+  cursor: pointer;
+  transition: opacity .2s, transform .15s;
+}
+
+button:hover:not(:disabled) {
+  opacity: .9;
+  transform: translateY(-2px);
+}
+
+button:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+.err {
+  color: #ff5555;
+  font-size: .85rem;
+  min-height: 1.2em;
+}
+
+.hint {
+  color: #444;
+  font-size: .8rem;
+  margin-top: 1rem;
+}
+
+/* ─── SCENE ─── */
+#scene {
+  position: relative;
+}
+
+#progress-dots {
+  position: fixed;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #333;
+  transition: background .3s, transform .3s;
+  cursor: pointer;
+}
+
+.dot.active {
+  background: var(--green);
+  transform: scale(1.4);
+}
+
+#cards-wrap {
+  perspective: 1200px;
+}
+
+/* ─── CARD ─── */
+.card {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform .6s cubic-bezier(.16, 1, .3, 1);
+}
+
+.card-3d {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 3rem 2.5rem;
+  background: rgba(255, 255, 255, .03);
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+  max-width: 480px;
+  width: 90%;
+  transform-style: preserve-3d;
+  transform: perspective(800px) rotateX(0deg) rotateY(0deg);
+  transition: transform .1s ease-out;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, .6);
+}
+
+.card-glow {
+  position: absolute;
+  inset: -60px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: .15;
+  filter: blur(80px);
+  transition: opacity .4s;
+}
+
+.card:hover .card-glow {
+  opacity: .25;
+}
+
+/* Card accent colors */
+.c-intro .card-glow {
+  background: #00ff88;
+}
+
+.c-games .card-glow {
+  background: #00aaff;
+}
+
+.c-wins .card-glow {
+  background: #ff8800;
+}
+
+.c-tc .card-glow {
+  background: #aa00ff;
+}
+
+.c-streak .card-glow {
+  background: #ff4488;
+}
+
+.c-persona .card-glow {
+  background: #00ffcc;
+}
+
+.c-outro .card-glow {
+  background: #ffffff;
+}
+
+.c-intro {
+  background: linear-gradient(160deg, #080c10 0%, #0a1a12 100%);
+}
+
+.c-games {
+  background: linear-gradient(160deg, #080c10 0%, #0a1020 100%);
+}
+
+.c-wins {
+  background: linear-gradient(160deg, #080c10 0%, #1a1008 100%);
+}
+
+.c-tc {
+  background: linear-gradient(160deg, #080c10 0%, #120a1a 100%);
+}
+
+.c-streak {
+  background: linear-gradient(160deg, #080c10 0%, #1a0810 100%);
+}
+
+.c-persona {
+  background: linear-gradient(160deg, #080c10 0%, #081a18 100%);
+}
+
+.c-outro {
+  background: linear-gradient(160deg, #080c10 0%, #0a0a0a 100%);
+}
+
+/* ─── PROFILE PIC ─── */
+.pfp-ring {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 3px solid var(--green);
+  margin: 0 auto 1.5rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 255, 136, .3);
+}
+
+.pfp-ring img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pfp-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  background: #111;
+  color: #444;
+}
+
+/* ─── TYPOGRAPHY ─── */
+.c-name {
+  font-family: var(--font-head);
+  font-size: 2.8rem;
+  color: var(--green);
+  letter-spacing: .04em;
+  margin-bottom: .5rem;
+}
+
+.label {
+  font-size: .8rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: .5rem;
+}
+
+.mega {
+  font-family: var(--font-head);
+  font-size: 8rem;
+  line-height: .9;
+  color: var(--green);
+  text-shadow: 0 0 40px rgba(0, 255, 136, .3);
+  margin: .3rem 0;
+}
+
+.mega .pct {
+  font-size: 3rem;
+}
+
+.big-txt {
+  font-family: var(--font-head);
+  font-size: 4.5rem;
+  color: var(--green);
+  line-height: 1;
+  margin: .5rem 0;
+}
+
+.unit {
+  color: #888;
+  font-size: .95rem;
+  margin-top: .5rem;
+}
+
+.sub {
+  color: #666;
+  font-size: 1rem;
+  margin-top: .5rem;
+}
+
+/* ─── BADGE / FIRE ─── */
+.badge {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: .4rem 1rem;
+  border: 1px solid #ff8800;
+  color: #ff8800;
+  font-size: .8rem;
+  letter-spacing: .1em;
+  border-radius: 100px;
+}
+
+.fire {
+  font-size: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+/* ─── TRIO (game type breakdown) ─── */
+.trio {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.trio-item {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  align-items: center;
+}
+
+.trio-label {
+  color: #555;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+.trio-val {
+  color: #fff;
+  font-size: 1.8rem;
+  font-family: var(--font-head);
+}
+
+/* ─── RATINGS ─── */
+.ratings-row {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.r-item {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  align-items: center;
+}
+
+.r-label {
+  color: #555;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+.r-val {
+  color: var(--green);
+  font-size: 1.8rem;
+  font-family: var(--font-head);
+}
+
+/* ─── PERSONA ─── */
+.persona-name {
+  font-family: var(--font-head);
+  font-size: 3.5rem;
+  color: var(--green);
+  line-height: 1;
+  margin: 1rem 0 .5rem;
+}
+
+.persona-desc {
+  color: #aaa;
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+.roast {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, .04);
+  border-left: 3px solid var(--green);
+  font-size: .85rem;
+  color: #888;
+  text-align: left;
+  border-radius: 0 8px 8px 0;
+}
+
+/* ─── OUTRO ─── */
+.big-piece {
+  font-size: 5rem;
+  display: block;
+  margin-bottom: 1rem;
+  animation: floaty 3s ease-in-out infinite;
+}
+
+.c-outro h2 {
+  font-family: var(--font-head);
+  font-size: 2.5rem;
+  margin-bottom: .5rem;
+}
+
+.reset-btn {
+  margin-top: 2rem;
+  background: transparent;
+  border: 1px solid #444;
+  color: #aaa;
+  font-size: .9rem;
+  padding: .7rem 1.5rem;
+  border-radius: 100px;
+  letter-spacing: .05em;
+}
+
+.reset-btn:hover {
+  border-color: var(--green);
+  color: var(--green);
+  transform: none;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes floaty {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.card-in {
+  animation: slideUp .7s cubic-bezier(.16, 1, .3, 1) forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) rotateX(8deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 4rem;
+  }
+
+  .logo-chess {
+    font-size: 3.5rem;
+  }
+
+  .mega {
+    font-size: 5.5rem;
+  }
+
+  .big-txt {
+    font-size: 3rem;
+  }
+
+  .input-row {
+    flex-direction: column;
+  }
+
+  #progress-dots {
+    display: none;
+  }
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chess Wrapped 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- LANDING -->
+  <div id="landing">
+    <canvas id="bg-canvas"></canvas>
+    <div class="landing-inner">
+      <div class="logo-block">
+        <span class="logo-chess">♟</span>
+        <h1>CHESS<br><em>WRAPPED</em><br><span class="yr">2025</span></h1>
+      </div>
+      <p class="tagline">your year on the board</p>
+      <div class="input-row">
+        <input id="username" type="text" placeholder="chess.com username" autocomplete="off" />
+        <button id="go-btn">GO →</button>
+      </div>
+      <p id="err" class="err"></p>
+      <p class="hint">try: hikaru · MagnusCarlsen</p>
+    </div>
+  </div>
+
+  <!-- CARDS SCENE -->
+  <div id="scene" style="display:none">
+    <div id="progress-dots"></div>
+    <div id="cards-wrap">
+
+      <!-- Card 0: Intro -->
+      <div class="card c-intro">
+        <div class="card-3d">
+          <div class="pfp-ring">
+            <img id="pfp" src="" alt="avatar" onerror="this.style.display='none'" />
+            <div id="pfp-fallback" class="pfp-fallback">?</div>
+          </div>
+          <h2 id="card-username" class="c-name"></h2>
+          <p class="sub">here's your chess year ↓</p>
+        </div>
+        <div class="card-glow"></div>
+      </div>
+
+      <!-- Card 1: Total Games -->
+      <div class="card c-games">
+        <div class="card-3d">
+          <p class="label">you played</p>
+          <div class="mega" id="total-games">0</div>
+          <p class="unit">games in 2025</p>
+          <div class="trio" id="trio-games"></div>
+        </div>
+        <div class="card-glow"></div>
+      </div>
+
+      <!-- Card 2: Win Rate -->
+      <div class="card c-wins">
+        <div class="card-3d">
+          <p class="label">win rate</p>
+          <div class="mega" id="win-rate">0<span class="pct">%</span></div>
+          <p class="unit">of games won</p>
+          <div id="win-badge" class="badge" style="display:none">CRUSHING IT 🔥</div>
+        </div>
+        <div class="card-glow"></div>
+      </div>
+
+      <!-- Card 3: Time Control -->
+      <div class="card c-tc">
+        <div class="card-3d">
+          <p class="label">you're a</p>
+          <div class="big-txt" id="fav-tc">Rapid</div>
+          <p class="unit">player at heart</p>
+          <div class="ratings-row" id="ratings"></div>
+        </div>
+        <div class="card-glow"></div>
+      </div>
+
+      <!-- Card 4: Win Streak -->
+      <div class="card c-streak">
+        <div class="card-3d">
+          <p class="label">best streak</p>
+          <div class="mega" id="best-streak">0</div>
+          <p class="unit">wins in a row</p>
+          <div id="streak-fire" class="fire" style="display:none">🔥🔥🔥</div>
+        </div>
+        <div class="card-glow"></div>
+      </div>
+
+      <!-- Card 5: Persona -->
+      <div class="card c-persona">
+        <div class="card-3d">
+          <p class="label">your chess persona</p>
+          <div class="persona-name" id="persona-type"></div>
+          <p class="persona-desc" id="persona-desc"></p>
+          <p class="roast" id="roast"></p>
+        </div>
+        <div class="card-glow"></div>
+      </div>
+
+      <!-- Card 6: Outro -->
+      <div class="card c-outro">
+        <div class="card-3d">
+          <span class="big-piece">♚</span>
+          <h2>that's a wrap</h2>
+          <p class="sub">keep grinding, keep improving</p>
+
+          <button id="reset-btn" class="reset-btn">← another player</button>
+        </div>
+        <div class="card-glow"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
